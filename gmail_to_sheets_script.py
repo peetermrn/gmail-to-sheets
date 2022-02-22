@@ -103,7 +103,8 @@ def get_last_entry_date(client):  # check when the last stock order was.
         return "2019/01/01"
     date = sheet.row_values(row_nr)[0]
     temp = date.split(".")
-    return f"{temp[-1]}/{temp[1]}/{int(temp[0]) + 1}"
+    return f"{temp[-1]}/{temp[1]}/{int(temp[0]) + 1}"  # return date one day after last stock order. Otherwise some
+    # would be repeated.
 
 
 def write_to_sheets(lines, client):
