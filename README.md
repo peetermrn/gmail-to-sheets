@@ -2,10 +2,10 @@ Using the Google api analyze e-mails and insert info to Google sheets.
 
 I'm taking stock order confirmation emails and adding the date, ticker, price and amount to Google sheets.
 
-In my case I have one sheets that contains all orders and separate ones for each year as well.  
+In my case I have one sheet that contains all orders and separate ones for each year as well.  
 The script opens the spreadsheet containing all orders, checks on what date the last order was, then using the gmail api gets all confirmation emails after that date and adds their info to necessary spreadsheets.
 
-Sheets are organized as follows:    
+Sheets are organized as follows:        
 date(D.M.Y) stock_ticker price amount
 
 My sheets are in estonian so some code here is also, like regex and so on.

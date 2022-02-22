@@ -10,6 +10,7 @@ from googleapiclient.errors import HttpError
 from base64 import urlsafe_b64decode
 import re
 import gspread
+import time
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly', 'https://www.googleapis.com/auth/spreadsheets',
@@ -48,6 +49,7 @@ def get_messages(creds, client):
         # Call the Gmail API
         service = build('gmail', 'v1', credentials=creds)
         after = get_last_entry_date(client)
+        print(f"scanning emails after {after}")
         q = f'order on täidetud allpool toodud tingimustel after:{after}'  # take last entry date from sheets. Only
         # take emails which were received after that
         result = service.users().messages().list(userId='me', q=q).execute()
@@ -103,7 +105,11 @@ def get_last_entry_date(client):  # check when the last stock order was.
         return "2019/01/01"
     date = sheet.row_values(row_nr)[0]
     temp = date.split(".")
-    return f"{temp[-1]}/{temp[1]}/{int(temp[0]) + 1}"  # return date one day after last stock order. Otherwise some
+    day = str(int(temp[0]) + 1)
+    if len(day) < 2:
+        day = "0" + day
+
+    return f"{temp[-1]}/{temp[1]}/{day}"  # return date one day after last stock order. Otherwise some
     # would be repeated.
 
 
@@ -112,6 +118,7 @@ def write_to_sheets(lines, client):
     prev_line_year = ""
     year_sheet = get_sheet("2022", client)
     for line in lines:
+        time.sleep(5)  # not needed if only a few insertions
         row_nr = len(sheet.col_values(1)) + 1
         sheet.insert_row(line, row_nr)
         year = line[0].split(".")[-1]
