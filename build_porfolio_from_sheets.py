@@ -61,8 +61,6 @@ def build_portfolio(client):
     nr = 0
     for row in rows:
         nr += 1
-        if row['aktsia'] == "VIRSI":
-            print(nr, row)
         if row['aktsia'] in port_dict:
             stock = port_dict[row['aktsia']]
         else:

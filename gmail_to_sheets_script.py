@@ -58,7 +58,7 @@ def get_messages(creds, client):
             page_token = result['nextPageToken']
             result = service.users().messages().list(userId='me', q=q, pageToken=page_token).execute()
             if 'messages' in result:
-                messages.extend(result['messages'])
+                base_messages.extend(result['messages'])
         result = []
         for msg in base_messages:
             info = service.users().messages().get(userId='me', id=msg['id'], format='full').execute()
