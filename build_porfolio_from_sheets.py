@@ -55,7 +55,8 @@ def authenticate():
 def build_portfolio(client):
     """Take all stock orders and build current portfolio from them."""
     sheet = client.open('aktsiad').sheet1
-    rows = sheet.get_all_records() # this breaks if some cells are empty strings
+    rows = sheet.get_all_records()  # this breaks if some cells are empty strings
+    # explanation on why breaks: https://github.com/burnash/gspread/issues/1007
     port_dict = {}
     portfolio = []
     nr = 0
